@@ -2,7 +2,7 @@ import os
 import json
 import csv
 
-# === CREA O CARICA UTENTE ROOT ===
+
 def UtenteRoot():
     if not os.path.exists("root.json"):  # prima volta
         utente = input("Scrivi il nome utente root:\n")
@@ -16,8 +16,6 @@ def UtenteRoot():
             lista_root = tuple(json.load(f))
     return lista_root
 
-
-# === MENU ROOT: AGGIUNTA O RIMOZIONE PRODOTTI ===
 def PrivilegiUtente():
     scelta = input("Scegli cosa fare:\n(1) Aggiungere un prodotto\n(2) Rimuovere un prodotto\n(3) Visualizza deposito\n> ")
 
@@ -87,6 +85,8 @@ def PrivilegiUtente():
             writer = csv.writer(file)
             for nome, qta in prodotti.items():
                 writer.writerow([nome, qta])
+    
+    
     elif scelta == "3":
         with open("Lista.csv", 'r') as file:
             contenuto = file.read()
