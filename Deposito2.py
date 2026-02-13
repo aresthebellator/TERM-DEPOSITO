@@ -2,6 +2,22 @@ import os
 import json
 import csv
 
+def Scritta():
+    print("""\033[1;36m
+
+██████  ███████ ██████   ██████  ███████ ██ ████████  ██████  
+██   ██ ██      ██   ██ ██    ██ ██      ██    ██    ██    ██ 
+██   ██ █████   ██████  ██    ██ ███████ ██    ██    ██    ██ 
+██   ██ ██      ██      ██    ██      ██ ██    ██    ██    ██ 
+██████  ███████ ██       ██████  ███████ ██    ██     ██████  
+                                                              
+                                                              
+    \033[0m""")
+
+
+def Pulizia():
+    os.system("Clear")
+
 def UtenteRoot():
     if not os.path.exists("root.json"):
         utente = input("Scrivi il nuovo nome utente amministratore: ")
@@ -19,6 +35,8 @@ def UtenteRoot():
     
     
 def AggiungiProdotto():
+    Pulizia()
+    Scritta()
     prodotto = input("Scrivi il nome del prodotto da aggiungere: ")
     quantità = int(input("Scrivi la quantità del prodotto: "))
     prodotti = {}
@@ -41,6 +59,8 @@ def AggiungiProdotto():
 
 
 def RimuoviProdotto():
+    Pulizia()
+    Scritta()
     visualizza = input("Vuoi visualizzare prima il deposito? (s/n)")
     if visualizza.lower in ["si","s"]:
         with open("Lista.csv",'r')as file:
@@ -74,9 +94,15 @@ def RimuoviProdotto():
             writer.writerow([nome,qta])
 
 def VisualizzaDeposito():
-    with open("Lista.csv",'r') as file:
-        contenuto = file.read()
-        print(contenuto)
+    Pulizia()
+    Scritta()
+    if os.path.exists("Lista.csv"):
+
+        with open("Lista.csv",'r') as file:
+            contenuto = file.read()
+            print(contenuto)
+    else:
+        print("Errore, file Lista.csv non trovato, accertati che sia presente nel tuo computer e riprova.")
     
     print("\n")
     scelta = input("Vuoi aggiornare qualcosa nel deposito? (s/n)")
@@ -95,10 +121,12 @@ def VisualizzaDeposito():
 
 
 def PrivilegiAmministratore():
+    Pulizia()
+    Scritta()
     print("[1] Aggiungere un prodotto")
     print("[2] Rimuovere un prodotto")
     print("[3] Visualizza deposito")
-    scelta = input("Scegli cosa fare: ")
+    scelta =int(input("Scegli cosa fare: "))
 
     if scelta == 1:
         AggiungiProdotto()
@@ -109,6 +137,8 @@ def PrivilegiAmministratore():
 
 def Main():
     lista_root = UtenteRoot()
+    Pulizia()
+    Scritta()
     a = input("Sei amministratore? (s/n): ")
     if a.lower() in ["si","s"]:
         utente = input("Utente: ")
@@ -118,12 +148,11 @@ def Main():
             if (utente,password) == lista_root:
                 print("Accesso amministratore riuscito! ")
                 PrivilegiAmministratore()
+
             else:
                 print("Accesso negato")
             
-            continua = input("Vuoi riavviare il programma? (s/n): ")
-            if continua.lower() in ["no","n"]:
-                break
+            
 
 
 if __name__ == "__main__":
